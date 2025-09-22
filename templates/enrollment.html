@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Costume Contest Enrollment</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/baseIndex.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/baseForm.css') }}">
+
+</head>
+<body>
+    <!-- Floating ghosts -->
+    <div class="ghost">👻</div>
+    <div class="ghost">👻</div>
+    <div class="ghost">👻</div>
+
+    <div class="container">
+        <header class="header">
+            <h1>COSTUME CONTEST ENROLLMENT</h1>
+            <p class="subtitle">Join the Spookiest Competition!</p>
+            <p class="spooky-text"><strong>Make sure your costume(s) are final before entering. </strong>(I only had so much time)</p>
+
+        </header>
+
+        <div class="form-container">
+            <form id="enrollmentForm" action="/enroll" method="POST">
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="isGroup" name="isGroup" onchange="toggleGroupMode()">
+                    <label for="isGroup">This is a group costume</label>
+                </div>
+
+                <div class="dynamic-section" id="dynamicSection">
+                    <div class="person-entry" id="person1">
+                        <h3>Contestant</h3>
+                        <div class="form-group">
+                            <label for="name1">Name:</label>
+                            <input type="text" id="name1" name="names[]" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="costume1">Costume Description:</label>
+                            <textarea id="costume1" name="costumes[]" placeholder="Describe your amazing costume..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="addPersonSection" style="display: none;">
+                    <button type="button" class="add-person" onclick="addPerson()">+ Add Another Person</button>
+                </div>
+
+                <button type="submit" class="submit-button">ENTER CONTEST</button>
+            </form>
+        </div>
+
+        <div class="back-link">
+            <a href="/">← Back to Party Info</a>
+        </div>
+    </div>
+
+    <script>
+        let personCount = 1;
+
+        function toggleGroupMode() {
+            const isGroup = document.getElementById('isGroup').checked;
+            const addPersonSection = document.getElementById('addPersonSection');
+            const firstPersonTitle = document.querySelector('#person1 h3');
+
+            if (isGroup) {
+                firstPersonTitle.textContent = 'Person 1';
+                addPersonSection.style.display = 'block';
+            } else {
+                firstPersonTitle.textContent = 'Contestant';
+                addPersonSection.style.display = 'none';
+
+                // Remove extra persons if switching back to individual
+                const extraPersons = document.querySelectorAll('.person-entry:not(#person1)');
+                extraPersons.forEach(person => person.remove());
+                personCount = 1;
+            }
+        }
+
+        function addPerson() {
+            personCount++;
+            const dynamicSection = document.getElementById('dynamicSection');
+
+            const newPersonDiv = document.createElement('div');
+            newPersonDiv.className = 'person-entry';
+            newPersonDiv.id = `person${personCount}`;
+
+            newPersonDiv.innerHTML = `
+                <button type="button" class="remove-person" onclick="removePerson(${personCount})">×</button>
+                <h3>Person ${personCount}</h3>
+                <div class="form-group">
+                    <label for="name${personCount}">Name:</label>
+                    <input type="text" id="name${personCount}" name="names[]" required>
+                </div>
+                <div class="form-group">
+                    <label for="costume${personCount}">Costume Description:</label>
+                    <textarea id="costume${personCount}" name="costumes[]" placeholder="Describe your amazing costume..." required></textarea>
+                </div>
+            `;
+
+            dynamicSection.appendChild(newPersonDiv);
+        }
+
+        function removePerson(personId) {
+            const personDiv = document.getElementById(`person${personId}`);
+            if (personDiv) {
+                personDiv.remove();
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('🎃 Enrollment submitted! Good luck in the contest! 🎃');
+
+            // Uncomment the line below to actually submit the form
+            // this.submit();
+        });
+    </script>
+</body>
+</html>

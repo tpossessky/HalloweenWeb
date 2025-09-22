@@ -1,0 +1,60 @@
+body {
+   margin: 0;
+   min-height: 100vh;
+   display: grid;
+   place-items: center;
+   background: #111;
+}
+.svg-wrap {
+    width: min(50vw, 800px);
+    height: auto;
+}
+svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 32px #ff5d00);
+    animation: glow 4s ease-in-out infinite alternate;
+
+}
+@keyframes glow {
+    0% {
+        filter: drop-shadow(0 0 0px #ff5d00);
+    }
+    50% {
+        filter: drop-shadow(0 0 4px #ff5d00);
+    }
+    100% {
+        filter: drop-shadow(0 0 32px #ff5d00);
+    }
+}
+
+/* Animated stroke paths */
+.animated-stroke {
+    fill: none;
+    stroke: #eb6123;
+    stroke-width: 64;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+
+}
+
+/* Fill paths that appear after animation */
+.fill-path {
+    fill: #eb6123;
+    stroke: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+#splash {
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease;
+}
+
+#home-container {
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enter the Halloween Costume Contest 2025 - Submit your spooky entry now!">
+    <title>Costume Contest Enrollment | Halloween Party 2025</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/1980s.css') }}">
+    <link rel="preload" href="{{ url_for('static',filename='fonts/ween.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ url_for('static',filename='fonts/death.otf') }}" as="font" type="font/otf" crossorigin>
+    <style>
+        /* Additional styles for the enrollment form */
+        .enrollment-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #222;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+            border: 2px solid #ff5d00;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #ff5d00;
+            font-family: rusty, serif;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(255, 93, 0, 0.5);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-family: rusty, serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff5d00;
+            box-shadow: 0 0 15px rgba(255, 93, 0, 0.3);
+            background: #1a1a1a;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #888;
+            opacity: 1;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            border: 3px solid #ff5d00;
+            border-radius: 12px;
+            color: #ff5d00;
+            font-family: rusty, serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 0 20px rgba(255, 93, 0, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 93, 0, 0.5);
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-color: #ff7700;
+            color: #fff;
+            box-shadow:
+                0 0 30px rgba(255, 119, 0, 0.6),
+                0 8px 20px rgba(255, 93, 0, 0.3);
+            transform: translateY(-2px);
+            text-shadow:
+                0 0 15px #ff7700,
+                0 0 30px #ff7700;
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #ff5d00;
+            border-radius: 8px;
+            color: #ff5d00;
+            font-family: rusty, serif;
+            text-decoration: none;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #ff5d00;
+            color: #111;
+            text-shadow: none;
+        }
+
+        .warning-text {
+            background: rgba(255, 93, 0, 0.1);
+            border-left: 4px solid #ff5d00;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-text p {
+            color: #ff7700;
+            margin: 0;
+            font-size: clamp(0.85rem, 1.8vw, 1rem);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .category-option {
+            position: relative;
+        }
+
+        .category-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .category-option label {
+            display: block;
+            padding: 15px;
+            background: #111;
+            border: 2px solid #444;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .category-option input[type="radio"]:checked + label {
+            background: rgba(255, 93, 0, 0.2);
+            border-color: #ff5d00;
+            box-shadow: 0 0 15px rgba(255, 93, 0, 0.3);
+        }
+
+        .category-option label:hover {
+            border-color: #ff5d00;
+            background: rgba(255, 93, 0, 0.1);
+        }
+
+        @media (max-width: 480px) {
+            .enrollment-form {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .add-member-button {
+            background: linear-gradient(45deg, #a52c00, #ff5d00);
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .add-member-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .remove-member {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+    </style>
+</head>
+<body>
+    <main id="main-content">
+        <div class="crt-container">
+            <a href="/" class="back-button">← Back to Party</a>
+            <h1>Enter the Contest!</h1>
+        </div>
+
+        <div class="stab-card-container">
+            <div class="stab-card-wide">
+                <h2>Dare to Compete?</h2>
+                <p>Submit your terrifying entry for the 1st Annual Halloween Costume Contest. Winners will be announced at midnight... if they survive!</p>
+            </div>
+        </div>
+
+        <div class="stab-card-container">
+            <form class="enrollment-form" method="POST" action="{{ url_for('enroll') }}">
+
+                <div class="form-group">
+                    <label>Registration Type *</label>
+                    <div class="category-grid">
+                        <div class="category-option">
+                            <input type="radio" id="individual" name="registration_type" value="individual" required checked>
+                            <label for="individual">👤 Individual Entry</label>
+                        </div>
+                        <div class="category-option">
+                            <input type="radio" id="group" name="registration_type" value="group" required>
+                            <label for="group">👥 Group Entry</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group individual-only">
+                    <label for="full_name">Your Name *</label>
+                    <input type="text" id="full_name" name="full_name" required placeholder="Enter your mortal name...">
+                </div>
+
+                <div class="form-group individual-only">
+                    <label for="individual_costume">Your Costume Name *</label>
+                    <input type="text" id="individual_costume" name="individual_costume" placeholder="e.g., 'Zombie Accountant', 'Vampire Barista'">
+                </div>
+
+                <div class="form-group group-only" style="display: none;">
+                    <label for="group_name">Group/Team Name *</label>
+                    <input type="text" id="group_name" name="group_name" placeholder="e.g., 'The Undead Accountants', 'Vampire Volleyball Team'">
+                </div>
+
+                <div class="form-group group-only" style="display: none;">
+                    <label>Group Members</label>
+                    <div id="group-members-container">
+                        <div class="member-entry">
+                            <div class="member-inputs">
+                                <input type="text" name="member_names[]" placeholder="Member name" required>
+                                <input type="text" name="member_costumes[]" placeholder="Their costume name" required>
+                                <button type="button" class="remove-member" onclick="removeMember(this)" style="display: none;">❌</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="add-member" class="add-member-button">➕ Add Another Member</button>
+                </div>
+
+
+
+                <div class="warning-text">
+                    <p><strong>⚠️ WARNING:</strong> By entering this contest, you agree that your soul may be temporarily harvested for judging purposes. Side effects may include: sudden urges to cackle maniacally, increased sensitivity to garlic, and an irresistible need to lurk in shadows. Contest not responsible for any curses, hexes, or supernatural possessions that may occur.</p>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Submit My Entry
+                </button>
+
+            </form>
+        </div>
+
+        <div class="stab-card-container">
+            <div class="stab-card">
+                <h2>📋 Contest Rules</h2>
+                <p>• Costumes must be worn to the party<br>
+                • Judging at 11:30 PM<br>
+                • Winners announced at midnight</p>
+            </div>
+            <div class="stab-card">
+                <h2>🏆 Prizes</h2>
+                <p>• 1st Place: $100 + Trophy<br>
+                • 2nd Place: $50 + Certificate<br>
+                • 3rd Place: $25 + Bragging Rights<br>
+                • Participation: Eternal glory</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        let memberCount = 1;
+
+        // Add member function
+        document.getElementById('add-member').addEventListener('click', function() {
+            memberCount++;
+            const container = document.getElementById('group-members-container');
+            const memberEntry = document.createElement('div');
+            memberEntry.className = 'member-entry';
+
+            memberEntry.innerHTML = `
+                <div class="member-inputs">
+                    <input type="text" name="member_names[]" placeholder="Member name" required>
+                    <input type="text" name="member_costumes[]" placeholder="Their costume name" required>
+                    <button type="button" class="remove-member" onclick="removeMember(this)">❌</button>
+                </div>
+            `;
+
+            container.appendChild(memberEntry);
+            updateRemoveButtons();
+        });
+
+        // Remove member function
+        function removeMember(button) {
+            button.closest('.member-entry').remove();
+            memberCount--;
+            updateRemoveButtons();
+        }
+
+        // Update remove button visibility
+        function updateRemoveButtons() {
+            const removeButtons = document.querySelectorAll('.remove-member');
+            removeButtons.forEach((button, index) => {
+                button.style.display = removeButtons.length > 1 ? 'block' : 'none';
+            });
+        }
+
+        // Handle registration type toggle
+        document.querySelectorAll('input[name="registration_type"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const groupFields = document.querySelectorAll('.group-only');
+                const individualFields = document.querySelectorAll('.individual-only');
+                const groupName = document.getElementById('group_name');
+                const fullName = document.getElementById('full_name');
+                const individualCostume = document.getElementById('individual_costume');
+
+                if (this.value === 'group') {
+                    groupFields.forEach(field => field.style.display = 'block');
+                    individualFields.forEach(field => field.style.display = 'none');
+                    groupName.required = true;
+                    fullName.required = false;
+                    individualCostume.required = false;
+
+                    // Make group member fields required
+                    document.querySelectorAll('input[name="member_names[]"]').forEach(input => input.required = true);
+                    document.querySelectorAll('input[name="member_costumes[]"]').forEach(input => input.required = true);
+                } else {
+                    groupFields.forEach(field => field.style.display = 'none');
+                    individualFields.forEach(field => field.style.display = 'block');
+                    groupName.required = false;
+                    fullName.required = true;
+                    individualCostume.required = true;
+
+                    // Clear group fields and make them not required
+                    groupName.value = '';
+                    document.querySelectorAll('input[name="member_names[]"]').forEach(input => {
+                        input.value = '';
+                        input.required = false;
+                    });
+                    document.querySelectorAll('input[name="member_costumes[]"]').forEach(input => {
+                        input.value = '';
+                        input.required = false;
+                    });
+                }
+            });
+        });
+
+        // Initialize individual mode
+        document.getElementById('full_name').required = true;
+
+        // Add some interactive flair
+        document.querySelector('.submit-button').addEventListener('click', function(e) {
+            // Add a spooky confirmation
+            const form = document.querySelector('.enrollment-form');
+            const isValid = form.checkValidity();
+
+            if (isValid) {
+                // Add a brief glow effect
+                this.style.animation = 'pulseSubmit 0.6s ease-in-out';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 600);
+
+                console.log('💀 Your soul has been submitted... 💀');
+            }
+        });
+
+        // Add glow effect to focused inputs
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add CSS for submit animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulseSubmit {
+                0% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
+                50% { box-shadow: 0 0 40px rgba(255, 93, 0, 0.8); }
+                100% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Spooky console messages
+        console.log('🎃 Welcome to the Costume Contest enrollment... 🎃');
+        console.log('👻 Choose your category wisely, mortal... 👻');
+        console.log('🦇 The judges are already watching... 🦇');
+    </script>
+</body>
+</html>

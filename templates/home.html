@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Halloween Party 2025 - October 31st at 9pm, costume contest and spooky fun!">
+    <title>Halloween Party 2025 | Spooky Celebration</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/1980s.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/halloweenButton.css') }}">
+
+    <link rel="preload" href="{{ url_for('static',filename='fonts/ween.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ url_for('static',filename='fonts/death.otf') }}" as="font" type="font/otf" crossorigin>
+</head>
+<body>
+    <main id="main-content">
+        <div class="crt-container">
+            <h1>Halloween Party 2025!</h1>
+        </div>
+
+        <!-- Party Details -->
+        <div class="stab-card-container">
+            <div class="stab-card">
+                <h2>📍 Location</h2>
+                <p>110 Hemlock St<br>Pittsburgh, PA 15212</p>
+            </div>
+            <div class="stab-card">
+                <h2>🎃 Date/Time</h2>
+                <p>October 31st<br>9:00 PM</p>
+            </div>
+            <div class="stab-card">
+                <h2>🕷️ Dress Code</h2>
+                <p>Don't be lame! Wear a costume!</p>
+            </div>
+        </div>
+        <!-- What to Expect -->
+        <div class="stab-card-container">
+            <div class="stab-card">
+                <h2>🎵 Music</h2>
+                <p>Horror classics, modern hits</p>
+            </div>
+            <div class="stab-card">
+                <h2>🍻 Drinks</h2>
+                <p>Spooky cocktails, beer, and our famous jello shot syringes</p>
+            </div>
+            <div class="stab-card">
+                <h2>🍕 Food</h2>
+                <p>Halloween-themed snacks and late-night bites</p>
+            </div>
+        </div>
+        <!-- Costume Contest -->
+        <div class="stab-card-container">
+            <div class="stab-card-wide">
+                <h2>👑 Costume Contest</h2>
+                <p>The 1st Annual Costume Contest will be taking place this year with the following categories:</p>
+            </div>
+        </div>
+
+        <!-- Contest Categories -->
+        <div class="stab-card-container">
+            <div class="stab-card">
+                <h2>🏆 Best Overall</h2>
+                <p>Original, unique, and imaginative costumes</p>
+            </div>
+            <div class="stab-card">
+                <h2>🏆 Best Group/Couple</h2>
+                <p>Nightmare fuel and spine-chilling terror</p>
+            </div>
+            <div class="stab-card">
+                <h2>🏆 Most Creative</h2>
+                <p>Show off your creativity!</p>
+            </div>
+        </div>
+        <div class="stab-card-container">
+            <a href="{{url_for('enroll')}}" class="halloween-button">
+                <div class="particles"></div>
+                Enter Contest
+            </a>
+        </div>
+    </main>
+
+</body>
+</html>

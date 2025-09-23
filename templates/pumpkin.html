@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{{ url_for('static', filename = 'js/pumpkinDraw.js') }}"></script>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/pumpkin.css') }}">
-
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+    <link rel="preload" href="{{ url_for('static',filename='fonts/ween.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ url_for('static',filename='fonts/death.otf') }}" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="{{ url_for('static',filename='fonts/night.otf') }}" as="font" type="font/otf" crossorigin>
     <title>Halloween Party 2025</title>
 </head>
 <body>
-    <div id="splash" class="svg-wrap" role="img" aria-label="Large decorative SVG">
+    <div id="home-container"></div>
+
+    {% if showAnimation %}
+        <div id="splash" class="svg-wrap" role="img" aria-label="Large decorative SVG">
         <svg xmlns="http://www.w3.org/2000/svg"
              width="1344.283082pt" height="1348.986049pt"
              viewBox="0 0 1344.283082 1348.986049"
@@ -182,7 +188,16 @@
           </g>
         </svg>
     </div>
-    <div id="home-container"></div>
+    {% endif %}
+
+
+    <footer class="spooky-footer">
+        <div class="footer-content">
+          <p>Happy Haunting!</p>
+          <a href="https://www.wikihow.com/Perform-a-S%C3%A9ance">Contact Info</a><br><br>
+          <a href="{{url_for('suggest')}}">Got an Idea For Next Year?</a>
+        </div>
+    </footer>
 
 </body>
 </html>

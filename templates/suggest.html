@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shitty Idea Simulator!">
+    <title>Make it a good one</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/enroll.css') }}">
+
+    <link rel="preload" href="{{ url_for('static',filename='fonts/ween.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ url_for('static',filename='fonts/death.otf') }}" as="font" type="font/otf" crossorigin>
+
+</head>
+<body>
+    <main id="main-content">
+        <div class="crt-container">
+            <a href="/" class="back-button">← Back to Party</a>
+            <h1>Suggestion Box!</h1>
+        </div>
+
+        <div class="stab-card-container">
+            <div class="stab-card-wide">
+                <h2>Suggest</h2>
+                <p>Submit your idea for next year!</p>
+            </div>
+        </div>
+
+        <div class="stab-card-container">
+            <form class="enrollment-form" method="POST" action="{{ url_for('suggest') }}">
+                <div class="form-group">
+                    <label class="form-label" for="idea">Your Idea</label>
+                    <input type="text" id="idea" name="idea" required placeholder="Enter your idea...">
+                </div>
+
+                <div class="warning-text">
+                    <p><strong>⚠️ WARNING:</strong> Bad ideas will result in personal data being sold to the highest bidder</p>
+                </div>
+                {% if errorMsg != "" %}
+                <div class="warning-text">
+                    <p><strong>❌</strong> {{ errorMsg }}</p>
+                </div>
+                {% endif %}
+
+                {% if submitted %}
+                <div class="warning-text">
+                    <p>✅ <strong>Submitted!</strong></p>
+                </div>
+                {% endif %}
+                <button type="submit" class="submit-button">
+                    Submit
+                </button>
+
+            </form>
+        </div>
+    </main>
+
+
+    <footer class="spooky-footer">
+      <div class="footer-content">
+        <p>Happy Haunting!</p>
+        <a href="https://www.wikihow.com/Perform-a-S%C3%A9ance">Contact Info</a>
+        <div class="footer-icons">
+          <span>🕷️</span>
+          <span>🕸️</span>
+          <span>🦇</span>
+        </div>
+      </div>
+    </footer>
+</body>
+</html>

@@ -8,13 +8,31 @@
     src: url('../fonts/death.otf');
     font-weight: bold;
 }
-
+@font-face{
+    font-family: night;
+    src: url('../fonts/night.otf');
+    font-weight: normal;
+}
+@font-face{
+    font-family: robo;
+    src: url('../fonts/roboreg.ttf');
+    font-weight: normal;
+}
 body {
     background: #111;
     margin: 0;
     padding: 0;
 }
+#home-container {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  visibility: hidden;
+}
 
+#home-container.visible {
+  opacity: 1;
+  visibility: visible;
+}
 .crt-container {
     padding: clamp(1rem, 4vw, 4rem);
     position: relative;
@@ -32,18 +50,11 @@ body {
 }
 
 @keyframes h1Glow {
-  0%   { filter: drop-shadow(0 0 8px #ff5d00); }
+  0%   { filter: drop-shadow(0 0 16px #ff5d00); }
   50%  { filter: drop-shadow(0 0 32px #ff5d00); }
   100% { filter: drop-shadow(0 0 16px #ff5d00); }
 }
 
-@keyframes h1Flicker {
-  0%   { filter: drop-shadow(0 0 28px #ff5d00); }
-  25%  { filter: drop-shadow(0 0 32px #ff5d00); }
-  50%  { filter: drop-shadow(0 0 30px #ff5d00); }
-  75%  { filter: drop-shadow(0 0 34px #ff5d00); }
-  100% { filter: drop-shadow(0 0 31px #ff5d00); }
-}
 
 .stab-card-container {
     display: flex;
@@ -97,6 +108,30 @@ body {
     font-size: clamp(0.9rem, 2.5vw, 1.5rem);
     line-height: 1.4;
     margin-bottom: 0;
+    font-family: robo, serif;
+}
+
+/*#top-row-stab-container {*/
+/*    -webkit-animation: right-to-left 5s linear forwards;*/
+/*    animation: right-to-left 5s linear forwards;*/
+/*}*/
+
+/*#bottom-row-stab-container {*/
+/*    -webkit-animation: left-to-right 5s linear forwards;*/
+/*    animation: left-to-right 5s linear forwards;*/
+/*}*/
+
+
+
+
+@keyframes right-to-left{
+    from{left:0}
+    to{left:100%}
+}
+
+@keyframes right-to-left{
+    from{right:0}
+    to{right:100%}
 }
 
 /* Mobile-first breakpoints */
@@ -162,4 +197,53 @@ body {
         animation: none;
         filter: drop-shadow(0 0 16px #ff5d00);
     }
+}
+
+.spooky-footer {
+    background: #111;
+    color: #ff5d00;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-family: 'ween', cursive; /* spooky font */
+    width: 100%; /* ensures full width */
+    position: relative; /* for the glow effect */
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+}
+.spooky-footer::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 93, 0, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+
+.footer-content p {
+    margin: 0.5rem 0;
+}
+
+.footer-content a:link {
+    font-family: robo, serif;
+     color: white;
+}
+.footer-content a:link {
+     color: white;
+}
+
+.footer-content a:visited {
+    color: grey;
+}
+
+a:hover {
+
+}
+
+.footer-icons {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
 }

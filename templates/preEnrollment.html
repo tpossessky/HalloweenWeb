@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Halloween Costume Contest 2025 - Enrollment opening soon!">
     <title>Contest Enrollment Coming Soon | Halloween Party 2025</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/1980s.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
     <link rel="preload" href="{{ url_for('static',filename='fonts/ween.ttf') }}" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="{{ url_for('static',filename='fonts/death.otf') }}" as="font" type="font/otf" crossorigin>
     <style>
-        /* Additional styles for the waiting page */
+
         .countdown-container {
             text-align: center;
             padding: 2rem;
@@ -74,69 +74,27 @@
             letter-spacing: 1px;
         }
 
-        .notification-signup {
-            background: rgba(255, 93, 0, 0.1);
-            border: 2px solid #ff5d00;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
 
-        .notification-form {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .notification-form input[type="email"] {
-            flex: 1;
-            min-width: 200px;
-            padding: 12px;
-            background: #111;
-            border: 2px solid #444;
-            border-radius: 8px;
-            color: #fff;
-            font-family: rusty, serif;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-            transition: all 0.3s ease;
-        }
-
-        .notification-form input[type="email"]:focus {
-            outline: none;
-            border-color: #ff5d00;
-            box-shadow: 0 0 15px rgba(255, 93, 0, 0.3);
-            background: #1a1a1a;
-        }
-
-        .notification-form input[type="email"]::placeholder {
-            color: #888;
-        }
-
-        .notify-button {
-            padding: 12px 24px;
-            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 10px 20px;
+            background: transparent;
             border: 2px solid #ff5d00;
             border-radius: 8px;
             color: #ff5d00;
             font-family: rusty, serif;
+            text-decoration: none;
             font-size: clamp(0.9rem, 2vw, 1rem);
-            font-weight: bold;
-            cursor: pointer;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
         }
 
-        .notify-button:hover {
-            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            border-color: #ff7700;
-            color: #fff;
-            box-shadow: 0 0 20px rgba(255, 119, 0, 0.4);
-            transform: translateY(-1px);
+        .back-button:hover {
+            background: #ff5d00;
+            color: #111;
+            text-shadow: none;
         }
+
 
         .spooky-message {
             font-style: italic;
@@ -183,20 +141,6 @@
             100% { transform: translateX(calc(100vw + 100px)) rotate(0deg); }
         }
 
-        .teaser-info {
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 4px solid #ff5d00;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        .teaser-info h3 {
-            color: #ff5d00;
-            margin-top: 0;
-            font-family: rusty, serif;
-        }
-
         @media (max-width: 480px) {
             .countdown-display {
                 grid-template-columns: repeat(2, 1fr);
@@ -233,8 +177,9 @@
     <main id="main-content">
         <div class="crt-container">
             <a href="/" class="back-button">← Back to Party</a>
-            <h1>Contest Enrollment</h1>
+            <h1>Enter the Contest!</h1>
         </div>
+
 
         <div class="stab-card-container">
             <div class="stab-card-wide">
@@ -285,20 +230,19 @@
         <div class="stab-card-container">
             <div class="stab-card-wide">
                 <h2>⚠️ Prepare Your Soul ⚠️</h2>
-                <p>Use this time wisely to craft the perfect costume. Gather your props, practice your terrifying poses, and decide whether you'll brave the contest alone or summon a group of fellow ghouls. The judges will be expecting nothing less than spectacular!</p>
+                <p>Use this time wisely to craft the perfect costume. Gather your props, practice your poses, and decide whether you'll brave the contest.</p>
             </div>
         </div>
 
     </main>
 
     <script>
-        // Set the target date for enrollment opening (example: October 25, 2025 at 6:00 PM)
-        const enrollmentDate = new Date('2025-10-25T18:00:00').getTime();
+        // Set the target date for enrollment opening (example: October 27, 2025 at 6:00 PM)
+        const enrollmentDate = new Date('2025-10-27T00:00:00').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = enrollmentDate - now;
-
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -336,5 +280,16 @@
         });
 
     </script>
+    <footer class="spooky-footer">
+      <div class="footer-content">
+        <p>Happy Haunting!</p>
+        <a href="https://www.wikihow.com/Perform-a-S%C3%A9ance">Contact Info</a>
+        <div class="footer-icons">
+          <span>🕷️</span>
+          <span>🕸️</span>
+          <span>🦇</span>
+        </div>
+      </div>
+    </footer>
 </body>
 </html>

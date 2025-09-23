@@ -28,26 +28,21 @@
 
         <div class="stab-card-container">
             <form class="enrollment-form" method="POST" action="{{ url_for('enroll') }}">
-                <div class="form-group individual-only">
+                <div class="form-group">
                     <label class="form-label" for="full_name">Your Name *</label>
                     <input type="text" id="full_name" name="full_name" required placeholder="Enter your mortal name...">
                 </div>
-
-                <div class="form-group individual-only">
+                <div class="form-group">
                     <label class="form-label" for="individual_costume">Your Costume Name *</label>
-                    <input type="text" id="individual_costume" name="individual_costume" placeholder="e.g., 'Zombie Accountant', 'Vampire Barista'">
-                </div>
-
-                <div class="warning-text">
-                    <p>Please only enroll once. I'm running out of time and energy to work on the backend.</p>
+                    <input type="text" id="individual_costume" name="individual_costume" required placeholder="e.g., 'Zombie Accountant', 'Vampire Barista'">
                 </div>
                 <div class="warning-text">
-                    <p><strong>⚠️ WARNING:</strong> By entering this contest, you agree that your soul may be temporarily harvested for judging purposes. Side effects may include: sudden urges to cackle maniacally, increased sensitivity to garlic, and an irresistible need to lurk in shadows. Host is not responsible for any curses, hexes, or supernatural possessions that may occur.</p>
+                    <p>⚠️ Please only enroll once. I'm running out of time and energy to work on the backend.</p>
                 </div>
-                <button type="submit" class="submit-button">
-                    Submit My Entry
-                </button>
-
+                <div class="warning-text">
+                    <p><strong>⚠️ WARNING:</strong> By entering this contest, your soul may be temporarily harvested for judging purposes. Side effects include: sudden urges to cackle, increased sensitivity to garlic, and an irresistible need to lurk in shadows.</p>
+                </div>
+                <button type="submit" class="submit-button">Submit My Entry</button>
             </form>
         </div>
 
@@ -68,95 +63,35 @@
     </main>
 
     <script>
-        let memberCount = 1;
+const submitBtn = document.querySelector('.submit-button');
+submitBtn.addEventListener('click', function(e) {
+    const form = document.querySelector('.enrollment-form');
+    if (form.checkValidity()) {
+        this.style.animation = 'pulseSubmit 0.6s ease-in-out';
+        setTimeout(() => { this.style.animation = ''; }, 600);
+        console.log('💀 Your soul has been submitted... 💀');
+    }
+});
 
+// Glow effect on focus
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('focus', () => input.style.transform = 'scale(1.02)');
+    input.addEventListener('blur', () => input.style.transform = 'scale(1)');
+});
 
-        // Handle registration type toggle
-        document.querySelectorAll('input[name="registration_type"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const groupFields = document.querySelectorAll('.group-only');
-                const individualFields = document.querySelectorAll('.individual-only');
-                const groupName = document.getElementById('group_name');
-                const fullName = document.getElementById('full_name');
-                const individualCostume = document.getElementById('individual_costume');
+// Submit pulse animation
+const style = document.createElement('style');
+style.textContent = `
+@keyframes pulseSubmit {
+    0% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(255, 93, 0, 0.8); }
+    100% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
+}`;
+document.head.appendChild(style);
 
-                if (this.value === 'group') {
-                    groupFields.forEach(field => field.style.display = 'block');
-                    individualFields.forEach(field => field.style.display = 'none');
-                    groupName.required = true;
-                    fullName.required = false;
-                    individualCostume.required = false;
-
-                    // Make group member fields required
-                    document.querySelectorAll('input[name="member_names[]"]').forEach(input => input.required = true);
-                    document.querySelectorAll('input[name="member_costumes[]"]').forEach(input => input.required = true);
-                } else {
-                    groupFields.forEach(field => field.style.display = 'none');
-                    individualFields.forEach(field => field.style.display = 'block');
-                    groupName.required = false;
-                    fullName.required = true;
-                    individualCostume.required = true;
-
-                    // Clear group fields and make them not required
-                    groupName.value = '';
-                    document.querySelectorAll('input[name="member_names[]"]').forEach(input => {
-                        input.value = '';
-                        input.required = false;
-                    });
-                    document.querySelectorAll('input[name="member_costumes[]"]').forEach(input => {
-                        input.value = '';
-                        input.required = false;
-                    });
-                }
-            });
-        });
-
-        // Initialize individual mode
-        document.getElementById('full_name').required = true;
-
-        // Add some interactive flair
-        document.querySelector('.submit-button').addEventListener('click', function(e) {
-            // Add a spooky confirmation
-            const form = document.querySelector('.enrollment-form');
-            const isValid = form.checkValidity();
-
-            if (isValid) {
-                // Add a brief glow effect
-                this.style.animation = 'pulseSubmit 0.6s ease-in-out';
-                setTimeout(() => {
-                    this.style.animation = '';
-                }, 600);
-
-                console.log('💀 Your soul has been submitted... 💀');
-            }
-        });
-
-        // Add glow effect to focused inputs
-        document.querySelectorAll('input, select, textarea').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.style.transform = 'scale(1.02)';
-            });
-
-            input.addEventListener('blur', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-
-        // Add CSS for submit animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulseSubmit {
-                0% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
-                50% { box-shadow: 0 0 40px rgba(255, 93, 0, 0.8); }
-                100% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Spooky console messages
-        console.log('🎃 Welcome to the Costume Contest enrollment... 🎃');
-        console.log('👻 Choose your category wisely, mortal... 👻');
-        console.log('🦇 The judges are already watching... 🦇');
+// Spooky console messages
+console.log('🎃 Welcome to the Costume Contest enrollment... 🎃');
+console.log('👻 The judges are already watching... 👻');
     </script>
 
     <footer class="spooky-footer">

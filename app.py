@@ -2,7 +2,7 @@ from flask import Flask, render_template, make_response, request
 from utils import utils
 app = Flask(__name__)
 
-isRegistrationOpen = False
+isRegistrationOpen = True
 ideas = []
 @app.route('/')
 def index():
@@ -42,9 +42,8 @@ def suggest():
     if request.method == 'POST':
         idea = request.form.get('idea')
         errorMsg = utils.get_error_message(idea)
-        if errorMsg == "":
-            submitted = True
-            ideas.append(idea)
+        submitted = True
+        ideas.append(idea)
 
     return render_template('suggest.html', errorMsg=errorMsg, submitted=submitted)
 
@@ -54,7 +53,26 @@ def getIdeas():
 
 @app.get('/admin')
 def admin():
+    """
+    1. Show ideas
+    2. Show users
+    """
     return ""
+
+
+
+@app.post('/start-voting-process')
+def start_voting_process():
+    print('start_vote')
+
+@app.post('/stop-voting-process')
+def stop_voting_process():
+    print('stop_vote')
+
+@app.post('/tally-votes')
+def tally_votes():
+    print('tally_votes')
+
 
 if __name__ == '__main__':
     app.run()

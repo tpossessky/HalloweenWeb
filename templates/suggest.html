@@ -43,9 +43,11 @@
                 {% endif %}
 
                 {% if submitted %}
-                <div class="warning-text">
-                    <p>✅ <strong>Submitted!</strong></p>
-                </div>
+                    {% if errorMsg == "" %}
+                        <div class="warning-text">
+                            <p>✅ <strong>Submitted!</strong></p>
+                        </div>
+                    {% endif %}
                 {% endif %}
                 <button type="submit" class="submit-button">
                     Submit

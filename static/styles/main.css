@@ -47,6 +47,10 @@ body {
     filter: drop-shadow(0 0 0px #ff5d00);
     animation: h1Glow 2s ease-in-out infinite alternate, h1Flicker 0.15s infinite alternate;
     margin: 0 0 clamp(1rem, 3vw, 2rem);
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
 }
 
 @keyframes h1Glow {

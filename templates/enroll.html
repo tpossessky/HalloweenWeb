@@ -10,100 +10,242 @@
 
     <link rel="preload" href="{{ url_for('static',filename='fonts/ween.ttf') }}" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="{{ url_for('static',filename='fonts/death.otf') }}" as="font" type="font/otf" crossorigin>
-
 </head>
 <body>
     <main id="main-content">
         <div class="crt-container">
             <a href="/" class="back-button">← Back to Party</a>
-            <h1>Enter the Contest!</h1>
+            {% if not isEnrolled %}
+                <h1>Enter the Contest!</h1>
+            {% endif %}
+            {% if isEnrolled %}
+                <h1>Your Soul Has Been Accepted</h1>
+            {% endif %}
         </div>
-
-        <div class="stab-card-container">
-            <div class="stab-card-wide">
-                <h2>Dare to Compete?</h2>
-                <p>Submit your terrifying entry for the 1st Annual Halloween Costume Contest. Winners will be announced at midnight... if they survive!</p>
+        {% if not isEnrolled %}
+            <div class="stab-card-container">
+                <div class="stab-card-wide">
+                    <h2>Dare to Compete?</h2>
+                    <p>Submit your terrifying entry for the 1st Annual Halloween Costume Contest. Winners will be announced at midnight... if they survive!</p>
+                </div>
             </div>
-        </div>
 
-        <div class="stab-card-container">
-            <form class="enrollment-form" method="POST" action="{{ url_for('enroll') }}">
-                <div class="form-group">
-                    <label class="form-label" for="full_name">Your Name *</label>
-                    <input type="text" id="full_name" name="full_name" required placeholder="Enter your mortal name...">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="individual_costume">Your Costume Name *</label>
-                    <input type="text" id="individual_costume" name="individual_costume" required placeholder="e.g., 'Zombie Accountant', 'Vampire Barista'">
-                </div>
-                <div class="warning-text">
-                    <p>⚠️ Please only enroll once. I'm running out of time and energy to work on the backend.</p>
-                </div>
-                <div class="warning-text">
-                    <p><strong>⚠️ WARNING:</strong> By entering this contest, your soul may be temporarily harvested for judging purposes. Side effects include: sudden urges to cackle, increased sensitivity to garlic, and an irresistible need to lurk in shadows.</p>
-                </div>
-                <button type="submit" class="submit-button">Submit My Entry</button>
-            </form>
-        </div>
+            <div class="stab-card-container">
+                <form class="enrollment-form" method="POST" action="{{ url_for('enroll') }}">
+                    <div class="form-group">
+                        <label class="form-label">Contest Category *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="contest_type" value="individual" id="individual" checked>
+                                <span class="radio-text">👤 Individual Costume</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="contest_type" value="group" id="group">
+                                <span class="radio-text">👥 Group Costume</span>
+                            </label>
+                        </div>
+                    </div>
 
-        <div class="stab-card-container">
-            <div class="stab-card-wide">
-                <h2>📋 Contest Rules</h2>
-                    <p> • Costumes must be worn to the party<br><br>
-                        • Judging will be based on overall votes <br><br>
-                        • Don’t summon anything you can’t banish<br><br>
-                        • No disturbing ancient burial grounds<br><br>
-                        • Vampires must wipe their fangs before judging<br><br>
-                        • Ghosts must remain visible for the entire contest<br><br>
-                        • Bribing the others to vote for you is highly encouraged<br>
-                    </p>
+                    <div class="form-group" id="individual-fields">
+                        <label class="form-label" for="full_name">Your Name *</label>
+                        <input type="text" id="full_name" name="full_name" required placeholder="Enter your mortal name...">
+
+                        <label class="form-label" for="individual_costume">Your Costume Name *</label>
+                        <input type="text" id="individual_costume" name="individual_costume" placeholder="e.g., 'Zombie Accountant', 'Vampire Barista'">
+                    </div>
+
+                    <div class="form-group" id="group-fields" style="display: none;">
+                        <label class="form-label" for="group_costume">Group Costume Theme *</label>
+                        <input type="text" id="group_costume" name="group_costume" placeholder="e.g., 'The Four Horsemen', 'Scooby-Doo Gang'">
+
+                        <label class="form-label" id="group_members_label">Group Members *</label>
+                        <div id="group-members-container">
+                            <!-- Members will be added here dynamically -->
+                        </div>
+                        <div class="add-member-section">
+                            <div class="member-inputs">
+                                <input type="text" id="member-name" placeholder="Member's name">
+                                <input type="text" id="member-costume" placeholder="Their costume/character">
+                            </div>
+                            <button type="button" id="add-member-btn" class="add-member-button">+ Add Member</button>
+                        </div>
+                    </div>
+
+                    <div class="warning-text">
+                        <p>⚠️ Please only enroll once. I'm running out of time and energy to work on the backend.</p>
+                    </div>
+                    <div class="warning-text">
+                        <p><strong>⚠️ WARNING:</strong> By entering this contest, your soul may be temporarily harvested for judging purposes. Side effects include: sudden urges to cackle, increased sensitivity to garlic, and an irresistible need to lurk in shadows.</p>
+                    </div>
+                    <button type="submit" class="submit-button">Submit My Entry</button>
+                </form>
             </div>
-        </div>
 
+            <div class="stab-card-container">
+                <div class="stab-card-wide">
+                    <h2>📋 Contest Rules</h2>
+                        <p> • Costumes must be worn to the party<br><br>
+                            • Judging will be based on overall votes <br><br>
+                            • Group costumes will be judged as a collective unit<br><br>
+                            • All group members must be present for judging<br><br>
+                            • Don't summon anything you can't banish<br><br>
+                            • No disturbing ancient burial grounds<br><br>
+                            • Vampires must wipe their fangs before judging<br><br>
+                            • Ghosts must remain visible for the entire contest<br><br>
+                            • Bribing the others to vote for you is highly encouraged<br>
+                        </p>
+                </div>
+            </div>
+        {% endif %}
     </main>
+    {% if not isEnrolled %}
+        <footer class="spooky-footer">
+          <div class="footer-content">
+            <p>Happy Haunting!</p>
+            <a href="https://www.wikihow.com/Perform-a-S%C3%A9ance">Contact Info</a>
+            <div class="footer-icons">
+              <span>🕷️</span>
+              <span>🕸️</span>
+              <span>🦇</span>
+            </div>
+          </div>
+        </footer>
+    {% endif %}
 
     <script>
-const submitBtn = document.querySelector('.submit-button');
-submitBtn.addEventListener('click', function(e) {
-    const form = document.querySelector('.enrollment-form');
-    if (form.checkValidity()) {
-        this.style.animation = 'pulseSubmit 0.6s ease-in-out';
-        setTimeout(() => { this.style.animation = ''; }, 600);
-        console.log('💀 Your soul has been submitted... 💀');
-    }
-});
+        // Toggle between individual and group fields
+        const individualRadio = document.getElementById('individual');
+        const groupRadio = document.getElementById('group');
+        const individualFields = document.getElementById('individual-fields');
+        const groupFields = document.getElementById('group-fields');
 
-// Glow effect on focus
-document.querySelectorAll('input').forEach(input => {
-    input.addEventListener('focus', () => input.style.transform = 'scale(1.02)');
-    input.addEventListener('blur', () => input.style.transform = 'scale(1)');
-});
+        function toggleFields() {
+            if (individualRadio.checked) {
+                individualFields.style.display = 'block';
+                groupFields.style.display = 'none';
+                // Make individual fields required
+                document.getElementById('full_name').required = true;
+                document.getElementById('individual_costume').required = true;
+                document.getElementById('group_costume').required = false;
+            } else {
+                individualFields.style.display = 'none';
+                groupFields.style.display = 'block';
+                // Make group fields required, remove individual requirements
+                document.getElementById('full_name').required = false;
+                document.getElementById('individual_costume').required = false;
+                document.getElementById('group_costume').required = true;
+            }
+        }
 
-// Submit pulse animation
-const style = document.createElement('style');
-style.textContent = `
-@keyframes pulseSubmit {
-    0% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
-    50% { box-shadow: 0 0 40px rgba(255, 93, 0, 0.8); }
-    100% { box-shadow: 0 0 20px rgba(255, 93, 0, 0.3); }
-}`;
-document.head.appendChild(style);
+        individualRadio.addEventListener('change', toggleFields);
+        groupRadio.addEventListener('change', toggleFields);
+
+        // Group member management
+        let groupMembers = [];
+
+        function addMember() {
+            const nameInput = document.getElementById('member-name');
+            const costumeInput = document.getElementById('member-costume');
+
+            if (nameInput.value.trim() && costumeInput.value.trim()) {
+                const member = {
+                    name: nameInput.value.trim(),
+                    costume: costumeInput.value.trim()
+                };
+
+                groupMembers.push(member);
+                displayMembers();
+
+                // Clear inputs
+                nameInput.value = '';
+                costumeInput.value = '';
+
+                console.log('👻 New member added to the coven... 👻');
+            } else {
+                alert('💀 Please enter both name and costume for the new member!');
+            }
+        }
+
+        function displayMembers() {
+            const container = document.getElementById('group-members-container');
+            container.innerHTML = '';
+
+            groupMembers.forEach((member, index) => {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'member-item';
+                memberDiv.innerHTML = `
+                    <span class="member-info">${member.name} - ${member.costume}</span>
+                    <button type="button" class="remove-member-btn" onclick="removeMember(${index})">✕</button>
+                `;
+                container.appendChild(memberDiv);
+            });
+
+            // Create hidden input for form submission
+            const hiddenInput = document.getElementById('group-members-data') || document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.id = 'group-members-data';
+            hiddenInput.name = 'group_members_data';
+            hiddenInput.value = JSON.stringify(groupMembers);
+
+            if (!document.getElementById('group-members-data')) {
+                document.querySelector('.enrollment-form').appendChild(hiddenInput);
+            }
+        }
+
+        function removeMember(index) {
+            groupMembers.splice(index, 1);
+            displayMembers();
+            console.log('💀 Member banished from the group... 💀');
+        }
+
+        document.getElementById('add-member-btn').addEventListener('click', addMember);
+
+        // Allow Enter key to add member
+        document.getElementById('member-name').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('member-costume').focus();
+            }
+        });
+
+        document.getElementById('member-costume').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addMember();
+            }
+        });
+
+        const submitBtn = document.querySelector('.submit-button');
+        submitBtn.addEventListener('click', function(e) {
+            const form = document.querySelector('.enrollment-form');
+
+            // Custom validation for group members
+            if (groupRadio.checked && groupMembers.length === 0) {
+                e.preventDefault();
+                alert('💀 You must add at least one group member!');
+                return;
+            }
+
+            if (form.checkValidity()) {
+                this.style.animation = 'pulseSubmit 0.6s ease-in-out';
+                setTimeout(() => { this.style.animation = ''; }, 600);
+                console.log('💀 Your soul has been submitted... 💀');
+            }
+        });
+
+        // Glow effect on focus
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('focus', () => input.style.transform = 'scale(1.02)');
+            input.addEventListener('blur', () => input.style.transform = 'scale(1)');
+        });
+
+        // Initialize form state
+        toggleFields();
 
 // Spooky console messages
 console.log('🎃 Welcome to the Costume Contest enrollment... 🎃');
 console.log('👻 The judges are already watching... 👻');
+console.log('👥 Groups welcome... if you dare band together... 👥');
     </script>
-
-    <footer class="spooky-footer">
-      <div class="footer-content">
-        <p>Happy Haunting!</p>
-        <a href="https://www.wikihow.com/Perform-a-S%C3%A9ance">Contact Info</a>
-        <div class="footer-icons">
-          <span>🕷️</span>
-          <span>🕸️</span>
-          <span>🦇</span>
-        </div>
-      </div>
-    </footer>
 </body>
 </html>

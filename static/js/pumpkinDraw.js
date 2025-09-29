@@ -22,15 +22,8 @@ function drawLines(timestamp) {
 
 window.addEventListener('DOMContentLoaded', () => {
     const splash = document.getElementById('splash');
-    const homeContainer = document.getElementById('home-container');
+    document.getElementById('footer').style.visibility = "hidden";
 
-    // Function to show home content after fonts are ready
-    function showHome(html) {
-        document.fonts.ready.then(() => {
-            homeContainer.innerHTML = html;
-            homeContainer.classList.add('visible'); // fade in home
-        });
-    }
 
     // Fetch home HTML content
     function loadHome() {
@@ -42,10 +35,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 const homeContainer = document.getElementById('home-container');
                 homeContainer.innerHTML = html;
                 homeContainer.classList.add('visible'); // fade in home
+                document.getElementById('footer').style.visibility = "visible";
+
             });
         })
         .catch(err => console.error("Failed to load home:", err));
-}
+    }
 
     if (splash) {
         // First visit: animate splash

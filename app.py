@@ -1,6 +1,11 @@
+from __future__ import annotations
+
 from typing import List
 
 from flask import Flask, render_template, make_response, request
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 import random
 from data.Contestant import Contestant
 from data.Member import Member
@@ -8,13 +13,21 @@ from utils import utils
 import json
 
 app = Flask(__name__)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://",
+)
 
-isRegistrationOpen = True
+
+isRegistrationOpen = False
 ideas : List[str] = []
 global_contestants: List[Contestant] = []
 
 
 @app.route('/')
+@limiter.limit("1/second", override_defaults=False)
 def index():
     hasVisited = request.cookies.get('hasVisited', '0')
     showAnimation = (hasVisited != '1')
@@ -24,10 +37,12 @@ def index():
     return resp
 
 @app.get('/home')
+@limiter.limit("1/second", override_defaults=False)
 def home():
     return render_template('home.html')
 
 @app.get('/enroll')
+@limiter.limit("1/second", override_defaults=False)
 def enroll():
     if isRegistrationOpen:
         return render_template('enroll.html')
@@ -35,6 +50,7 @@ def enroll():
         return render_template('preEnrollment.html')
 
 @app.post('/enroll')
+@limiter.limit("1/second", override_defaults=False)
 def enroll_post():
 
     enrollmentSuccessful = False
@@ -81,11 +97,13 @@ def enroll_post():
 
 
 @app.get('/preroll')
+@limiter.limit("1/second", override_defaults=False)
 def preroll():
     return render_template('preEnrollment.html')
 
 
 @app.route('/I_Guess_Were_Not_Good_Enough_For_You', methods=['GET','POST'])
+@limiter.limit("1/second", override_defaults=False)
 def suggest():
     errorMsg = ""
     submitted = False
@@ -99,10 +117,12 @@ def suggest():
     return render_template('suggest.html', errorMsg=errorMsg, submitted=submitted)
 
 @app.get('/ideas')
+@limiter.limit("1/second", override_defaults=False)
 def get_ideas():
     return ideas
 
 @app.get('/admin')
+@limiter.limit("1/second", override_defaults=False)
 def admin():
     """
     1. Show ideas
@@ -112,20 +132,29 @@ def admin():
 
 
 @app.get('/admin/contestants')
+@limiter.limit("1/second", override_defaults=False)
 def get_contestants():
     return global_contestants
 
 @app.post('/start-voting-process')
+@limiter.limit("1/second", override_defaults=False)
 def start_voting_process():
     print('start_vote')
 
 @app.post('/stop-voting-process')
+@limiter.limit("1/second", override_defaults=False)
 def stop_voting_process():
     print('stop_vote')
 
 @app.post('/tally-votes')
+@limiter.limit("1/second", override_defaults=False)
 def tally_votes():
     print('tally_votes')
+
+@app.errorhandler(429)
+def slowdown_cowboy(something):
+    return "Slow down there partner!"
+
 
 
 if __name__ == '__main__':

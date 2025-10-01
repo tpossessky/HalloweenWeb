@@ -2,10 +2,9 @@ from __future__ import annotations
 
 from typing import List
 
-from flask import Flask, render_template, make_response, request
+from flask import Flask, render_template, make_response, request, url_for
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-
 import random
 from data.Contestant import Contestant
 from data.Member import Member
@@ -20,6 +19,9 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 
+
+from active_party_routes import active_party_bp
+app.register_blueprint(active_party_bp)
 
 isRegistrationOpen = False
 ideas : List[str] = []
@@ -125,8 +127,10 @@ def get_ideas():
 @limiter.limit("1/second", override_defaults=False)
 def admin():
     """
+    Basically return everything?
     1. Show ideas
     2. Show users
+    3. song requests
     """
     return ""
 

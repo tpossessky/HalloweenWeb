@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+
     <script src="{{ url_for('static', filename = 'js/pumpkinDraw.js') }}"></script>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/pumpkin.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
     <link rel="preload" href="{{ url_for('static',filename='fonts/ween.ttf') }}" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="{{ url_for('static',filename='fonts/death.otf') }}" as="font" type="font/otf" crossorigin>
     <link rel="preload" href="{{ url_for('static',filename='fonts/night.otf') }}" as="font" type="font/otf" crossorigin>
-        <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
 
     <title>Halloween Party 2025</title>
 </head>
@@ -193,7 +196,7 @@
     {% endif %}
 
 
-    <footer id = "footer" class="spooky-footer">
+    <footer id = "footer" class="spooky-footer animate__animated animate__fadeIn animate__delay-2s">
         <div class="footer-content">
           <p>Happy Haunting!</p>
           <a href="https://www.wikihow.com/Perform-a-S%C3%A9ance">Contact Info</a><br><br>

@@ -6,7 +6,7 @@
     <meta name="description" content="Halloween Party 2025 - October 31st at 9pm, costume contest and spooky fun!">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/halloweenButton.css') }}">
     <meta name="robots" content="noindex">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
     <main id="main-content">
@@ -14,8 +14,8 @@
             <h1>Halloween Party 2025!</h1>
         </div>
 
-        <!-- Party Details -->
-        <div id = "top-row-stab-container" class="stab-card-container">
+        <!-- Why are you looking at my code, go away-->
+        <div id = "top-row-stab-container" class="stab-card-container animate__animated animate__slideInLeft">
             <div class="stab-card">
                 <h2>📍 Location</h2>
                 <p>110 Hemlock St<br>Pittsburgh, PA 15212</p>
@@ -29,8 +29,7 @@
                 <p>Don't be lame! Wear a costume!</p>
             </div>
         </div>
-        <!-- What to Expect -->
-        <div  id="bottom-row-stab-container" class="stab-card-container">
+        <div  id="bottom-row-stab-container" class="stab-card-container animate__animated animate__slideInRight">
             <div class="stab-card">
                 <h2>🎵 Music</h2>
                 <p>Spine-chilling beats & eerie tunes</p>
@@ -60,6 +59,8 @@
         </div>
 
     </main>
-
+<script>
+    console.log("BOO! Scared you I bet")
+</script>
 </body>
 </html>

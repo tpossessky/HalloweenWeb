@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List
-from data.Member import Member
+
+from src.data.model.Member import Member
+
 
 @dataclass
 class Contestant:

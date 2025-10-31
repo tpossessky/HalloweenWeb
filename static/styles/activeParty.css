@@ -31,15 +31,20 @@ h1 {
     position: relative;
     overflow: hidden;
 }
-
+@keyframes flicker {
+  0% { opacity: 1; text-shadow: 0 0 10px orange, 0 0 20px red; }
+  50% { opacity: 0.85; text-shadow: 0 0 5px darkorange, 0 0 10px red; }
+  100% { opacity: 1; text-shadow: 0 0 15px orange, 0 0 25px red; }
+}
 @media (max-width: 400px) {
   h1 {
     font-size: 1.5rem;
   }
 }
+
 body {
     font-family: 'robo', serif;
-    background: #0a0a0a;
+    background: #000000;
     color: #fff;
     overflow-x: hidden;
 }
@@ -182,7 +187,7 @@ nav a:hover {
 }
 
 .feature-card h3 {
-    color: #ff0000;
+    color: #fff;
     font-size: 1.8rem;
     margin-bottom: 1rem;
 }
@@ -223,4 +228,71 @@ footer a:hover {
         animation: none;
         filter: drop-shadow(0 0 16px #ff5d00);
     }
+}
+svg {
+    width: 400px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
+.anim-body {
+ width: 100%;
+    height: 100vh;
+    position: relative;
+
+}
+.fog-anim {
+    position: fixed; /* not absolute */
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    background: url('/static/images/fog.png') repeat-x bottom;
+    background-size: 200% auto;
+    animation: fogAnim 60s linear infinite;
+    opacity: 0.2;
+    mix-blend-mode: lighten; /* optional, can also try 'screen' */
+    z-index: 9999; /* higher than anything else */
+    pointer-events: none; /* so it doesn’t block clicks */
+}
+
+.fog-1 {
+    animation: fogAnim 60s linear infinite;
+}
+.fog-2 {
+    animation: fogAnim2 60s linear infinite;
+}
+@keyframes fogAnim {
+    0% { background-position: -200% bottom }
+    100% { background-position: 0% bottom }
+}
+@keyframes fogAnim2 {
+    0% { background-position: 100% bottom }
+    100% { background-position: 0% bottom }
+}
+
+.skeleton {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  background: url('/static/images/skeleton.gif') no-repeat center;
+  background-size: contain;
+  opacity: 0.8;
+  z-index: -1;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Left side */
+.skeleton.left {
+  left: 2%;
+}
+
+/* Right side (mirror + same vertical alignment) */
+.skeleton.right {
+  right: 2%;
+  transform: translateY(-50%) scaleX(-1); /* combine transforms */
 }
